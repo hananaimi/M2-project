@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alloy-metrics-config
+  namespace: alloy
+data:
+  config.alloy: |-
+    discovery.kubernetes "default" {
+      role = "pod"
+    }
+
+    prometheus.scrape "default" {
+      targets    = discovery.kubernetes.default.targets
+      forward_to = [prometheus.remote_write.default.receiver]
+        tls_config {
+          insecure_skip_verify = true
+        }
+    }
+
+    prometheus.remote_write "default" {
+      endpoint {
+        url = "http://mimir-gateway.mimir.svc.cluster.local/api/v1/push"
+        headers = {
+          "X-Scope-OrgID" = "pods",
+        }
+      }
+    }
+

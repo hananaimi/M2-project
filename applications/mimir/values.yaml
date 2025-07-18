@@ -1,0 +1,4 @@
+nginx:
+  enabled: false
+gateway:
+  enabledNonEnterprise: true
