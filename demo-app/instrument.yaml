@@ -5,7 +5,7 @@ metadata:
   namespace: trace-demo
 spec:
   exporter:
-    endpoint: http://alloy-traces.alloy.svc.cluster.local:4318
+    endpoint: http://alloy-otel.alloy.svc.cluster.local:4318
   propagators:
     - tracecontext
     - baggage
